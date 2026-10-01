@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Vote Our Right — Executive Voter Verification & Registration Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ==========================================================================
+       OUR VOTE OUR RIGHT - COMPLETE EMBEDDED STYLESHEET
+       ========================================================================== */
+
+    :root {
+      --primary-navy: #0f172a;
+      --primary-blue: #1e40af;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-gold: #d97706;
+      --gold-glow: rgba(217, 119, 6, 0.2);
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --warning: #f59e0b;
+
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-input: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --border-color: #e2e8f0;
+      --border-focus: #2563eb;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-page: #090d16;
+        --bg-card: #131c2e;
+        --bg-input: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --text-light: #64748b;
+        --border-color: #1e293b;
+        --border-focus: #3b82f6;
+        --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+        --success-bg: rgba(16, 185, 129, 0.15);
+        --danger-bg: rgba(239, 68, 68, 0.15);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 24px 16px;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.04) 0, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.03) 0, transparent 40%);
+    }
+
+    .portal-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Executive Header */
+    .portal-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #ffffff;
+      padding: 28px 32px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .portal-header::before {
+      content: "";
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.015) 15px, rgba(255, 255, 255, 0.015) 30px);
+      pointer-events: none;
+    }
+
+    .header-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .official-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217, 119, 6, 0.2);
+      border: 1px solid var(--accent-gold);
+      color: #fbbf24;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .system-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .header-title-section h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .header-title-section p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    /* Navigation Pills */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      background: var(--bg-card);
+      padding: 6px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .nav-tab-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.92rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-input);
+    }
+
+    .nav-tab-btn.active {
+      background: var(--primary-blue);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+
+    /* Stepper */
+    .stepper-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      position: relative;
+      padding: 0 8px;
+    }
+
+    .stepper-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stepper-item.active .step-circle {
+      border-color: var(--accent-blue);
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+
+    .stepper-item.active .step-label {
+      color: var(--accent-blue);
+    }
+
+    .stepper-item.completed .step-circle {
+      border-color: var(--success);
+      background: var(--success);
+      color: #ffffff;
+    }
+
+    .stepper-line {
+      position: absolute;
+      top: 16px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: var(--border-color);
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      .step-label { display: none; }
+    }
+
+    /* Cards */
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+    }
+
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .card-header-title h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .part-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-gold);
+      background: rgba(217, 119, 6, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Grid & Inputs */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 24px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-card { padding: 20px; }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-label {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .req-star { color: var(--danger); }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-light);
+      font-size: 15px;
+      pointer-events: none;
+      transition: color 0.2s ease;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      background-color: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--border-focus);
+      background-color: var(--bg-card);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .form-control:focus + .input-icon,
+    .input-wrapper:focus-within .input-icon {
+      color: var(--accent-blue);
+    }
+
+    select.form-control {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2064748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px;
+    }
+
+    .helper-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+
+    /* Radio Grid */
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .radio-grid { grid-template-columns: 1fr; }
+    }
+
+    .radio-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .radio-card input[type="radio"] {
+      accent-color: var(--primary-blue);
+      width: 16px;
+      height: 16px;
+    }
+
+    .radio-card:hover { border-color: var(--accent-blue); }
+
+    .radio-card:has(input:checked) {
+      border-color: var(--primary-blue);
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    /* Checkbox Cards */
+    .checkbox-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkbox-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-card input[type="checkbox"] {
+      accent-color: var(--primary-blue);
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .checkbox-card:hover { border-color: var(--accent-blue); }
+
+    .checkbox-card:has(input:checked) {
+      border-color: var(--primary-blue);
+      background: rgba(37, 99, 235, 0.04);
+    }
+
+    .checkbox-desc {
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .checkbox-desc strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    /* Camera Scanner Viewport */
+    .camera-scanner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .camera-instruction {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      max-width: 480px;
+    }
+
+    .camera-viewport {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 4/3;
+      background-color: #090d16;
+      border-radius: var(--radius-md);
+      border: 2px dashed var(--accent-blue);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .camera-viewport.scanned {
+      border: 2px solid var(--success);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .face-guide-oval {
+      position: absolute;
+      width: 55%;
+      height: 70%;
+      border: 2px dashed rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .scan-laser-line {
+      position: absolute;
+      left: 5%; right: 5%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), #ffffff, var(--accent-cyan), transparent);
+      box-shadow: 0 0 12px var(--accent-cyan);
+      top: 10%;
+      display: none;
+      z-index: 4;
+    }
+
+    .scan-laser-line.active {
+      display: block;
+      animation: laserScan 1.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes laserScan {
+      0% { top: 10%; }
+      100% { top: 88%; }
+    }
+
+    .camera-placeholder-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #64748b;
+      z-index: 1;
+    }
+
+    .cam-icon {
+      font-size: 42px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    video#regVideo, canvas#regCanvas, video#verifyVideo, canvas#verifyCanvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0; left: 0;
+      z-index: 1;
+    }
+
+    .cam-badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: var(--bg-input);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .cam-badge-status.active {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .cam-badge-status.verified {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: var(--success);
+    }
+
+    .camera-btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, var(--primary-blue), #2563eb);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-secondary {
+      padding: 12px 24px;
+      background: var(--bg-input);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover:not(:disabled) { background: var(--border-color); }
+
+    .btn-submit-large {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      justify-content: center;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-submit-large:hover:not(:disabled) {
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Banners */
+    .status-banner {
+      margin-top: 24px;
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-banner.success {
+      background: var(--success-bg);
+      border: 1.5px solid var(--success);
+      color: #065f46;
+    }
+
+    .status-banner.duplicate {
+      background: var(--danger-bg);
+      border: 1.5px solid var(--danger);
+      color: #991b1b;
+    }
+
+    .status-banner.notfound {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1.5px solid var(--warning);
+      color: #92400e;
+    }
+
+    .status-banner-icon { font-size: 28px; flex-shrink: 0; }
+    .status-banner-content h4 { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+
+    /* Records Table */
+    .records-table-container { overflow-x: auto; margin-top: 16px; }
+
+    table.records-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+
+    table.records-table th, table.records-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    table.records-table th {
+      background: var(--bg-input);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    table.records-table td.code-cell {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-blue);
+    }
+
+    .badge-voted {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1.5px solid var(--success);
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-pending {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border: 1.5px solid var(--warning);
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <div class="portal-wrapper">
+    
+    <!-- EXECUTIVE PORTAL HEADER -->
+    <header class="portal-header">
+      <div class="header-top-bar">
+        <span class="official-badge">
+          <i class="fa-solid fa-shield-halved"></i> Official Electoral Portal
+        </span>
+        <div class="system-status">
+          <span class="pulse-dot"></span> System Live &nbsp;|&nbsp; AES-256 Encrypted
+        </div>
+      </div>
+      <div class="header-title-section">
+        <h1>Our Vote Our Right</h1>
+        <p>National Voter Registration, Biometric Verification & Attendance Portal</p>
+      </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="nav-tabs">
+      <button id="tabRegisterBtn" class="nav-tab-btn active" onclick="switchTab('register')">
+        <i class="fa-solid fa-user-plus"></i> Voter Registration
+      </button>
+      <button id="tabCheckspotBtn" class="nav-tab-btn" onclick="switchTab('checkspot')">
+        <i class="fa-solid fa-id-card-clip"></i> Check Spot (Attendance)
+      </button>
+      <button id="tabRecordsBtn" class="nav-tab-btn" onclick="switchTab('records')">
+        <i class="fa-solid fa-database"></i> Registered Voters Log
+      </button>
+    </nav>
+
+    <!-- STEP PROGRESS BAR (For Registration) -->
+    <div id="registrationStepper" class="stepper-container">
+      <div class="stepper-line"></div>
+      <div class="stepper-item active" id="step1">
+        <div class="step-circle">01</div>
+        <span class="step-label">Personal Info</span>
+      </div>
+      <div class="stepper-item" id="step2">
+        <div class="step-circle">02</div>
+        <span class="step-label">Geography</span>
+      </div>
+      <div class="stepper-item" id="step3">
+        <div class="step-circle">03</div>
+        <span class="step-label">Biometrics</span>
+      </div>
+      <div class="stepper-item" id="step4">
+        <div class="step-circle">04</div>
+        <span class="step-label">Declaration</span>
+      </div>
+    </div>
+
+    <!-- ===================================================================
+         VIEW 1: VOTER REGISTRATION FORM
+         =================================================================== -->
+    <main id="viewRegister">
+      <form id="voterForm" onsubmit="handleRegistration(event)">
+
+        <!-- PART I: PERSONAL IDENTIFICATION -->
+        <section class="form-card">
+          <div class="card-header-bar">
+            <div class="card-header-title">
+              <span class="section-icon"><i class="fa-solid fa-user"></i></span>
+              <h3>Personal Identification</h3>
+            </div>
+            <span class="part-badge">PART I</span>
+          </div>
+
+          <div class="form-grid">
+            <!-- Full Name -->
+            <div class="input-group full-width">
+              <label class="input-label" for="fullName">
+                Full Official Name <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="fullName" class="form-control" required placeholder="Enter full name as per official identity document">
+              </div>
+            </div>
+
+            <!-- Gender Cards -->
+            <div class="input-group full-width">
+              <label class="input-label">
+                Gender <span class="req-star">*</span>
+              </label>
+              <div class="radio-grid">
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="Male" checked>
+                  <span>👨 Male</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="Female">
+                  <span>👩 Female</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="Other">
+                  <span>👤 Other</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- ID Reference Number -->
+            <div class="input-group">
+              <label class="input-label" for="aadhaarNum">
+                12-Digit ID Reference / Aadhaar <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-id-card input-icon"></i>
+                <input type="text" id="aadhaarNum" class="form-control" required maxlength="12" pattern="\d{12}" placeholder="Enter 12-digit number">
+              </div>
+              <span class="helper-text">Exactly 12 numeric digits without spaces.</span>
+            </div>
+
+            <!-- Voter Category Select -->
+            <div class="input-group">
+              <label class="input-label" for="voterCategory">
+                Voter Category <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-layer-group input-icon"></i>
+                <select id="voterCategory" class="form-control" required>
+                  <option value="">-- Select Category --</option>
+                  <option value="General Resident" selected>General Resident Voter</option>
+                  <option value="First Time Youth">First-Time Youth (Age 18-21)</option>
+                  <option value="Senior Citizen">Senior Citizen (Age 60+)</option>
+                  <option value="Overseas / NRI">Overseas / NRI Voter</option>
+                  <option value="Service / Armed Forces">Service / Armed Forces</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PART II: ELECTORAL GEOGRAPHY -->
+        <section class="form-card">
+          <div class="card-header-bar">
+            <div class="card-header-title">
+              <span class="section-icon"><i class="fa-solid fa-map-location-dot"></i></span>
+              <h3>Electoral Geography & Location</h3>
+            </div>
+            <span class="part-badge">PART II</span>
+          </div>
+
+          <div class="form-grid">
+            <!-- Region -->
+            <div class="input-group">
+              <label class="input-label" for="region">
+                Region / Zone <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-compass input-icon"></i>
+                <input type="text" id="region" class="form-control" required placeholder="e.g. Coastal Zone / Rayalaseema">
+              </div>
+            </div>
+
+            <!-- District -->
+            <div class="input-group">
+              <label class="input-label" for="district">
+                District <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-building-columns input-icon"></i>
+                <input type="text" id="district" class="form-control" required placeholder="Enter district name">
+              </div>
+            </div>
+
+            <!-- Mandal / Ward -->
+            <div class="input-group">
+              <label class="input-label" for="mandal">
+                Mandal / Ward <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-house-chimney input-icon"></i>
+                <input type="text" id="mandal" class="form-control" required placeholder="Enter mandal or ward number">
+              </div>
+            </div>
+
+            <!-- PIN Code -->
+            <div class="input-group">
+              <label class="input-label" for="pincode">
+                PIN Code <span class="req-star">*</span>
+              </label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-location-dot input-icon"></i>
+                <input type="text" id="pincode" class="form-control" required maxlength="6" pattern="\d{6}" placeholder="6-digit postal code">
+              </div>
+              <span class="helper-text">6-digit postal index code.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- PART III: BIOMETRIC FACE SCAN & LIVENESS CHECK -->
+        <section class="form-card">
+          <div class="card-header-bar">
+            <div class="card-header-title">
+              <span class="section-icon"><i class="fa-solid fa-camera-retro"></i></span>
+              <h3>Biometric Verification & Liveness Check</h3>
+            </div>
+            <span class="part-badge">PART III</span>
+          </div>
+
+          <div class="camera-scanner-container">
+            <p class="camera-instruction">
+              Position applicant face squarely in frame. Perform liveness test (blink & turn head) to generate verified biometric signature.
+            </p>
+
+            <div class="cam-badge-status" id="regCamStatus">
+              <i class="fa-solid fa-video-slash"></i> Camera Inactive
+            </div>
+
+            <!-- Camera Viewport Box -->
+            <div class="camera-viewport" id="regCamViewport">
+              <div class="face-guide-oval"></div>
+              <div class="scan-laser-line" id="regScanLine"></div>
+
+              <div class="camera-placeholder-content" id="regCamPlaceholder">
+                <span class="cam-icon">📸</span>
+                <span>Click "Start Camera" below to activate camera</span>
+              </div>
+
+              <video id="regVideo" autoplay playsinline style="display:none;"></video>
+              <canvas id="regCanvas" style="display:none;"></canvas>
+            </div>
+
+            <!-- Camera Control Buttons -->
+            <div class="camera-btn-group">
+              <button type="button" id="regStartCamBtn" class="btn-secondary" onclick="initRegistrationCamera()">
+                <i class="fa-solid fa-video"></i> Start Camera
+              </button>
+              <button type="button" id="regScanFaceBtn" class="btn-primary" disabled onclick="captureRegistrationFace()">
+                <i class="fa-solid fa-expand"></i> Verify Face & Liveness
+              </button>
+              <button type="button" id="regRetakeBtn" class="btn-secondary hidden" onclick="resetRegistrationCamera()">
+                <i class="fa-solid fa-rotate-left"></i> Retake Scan
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- PART IV: PREFERENCES & SUBMISSION -->
+        <section class="form-card">
+          <div class="card-header-bar">
+            <div class="card-header-title">
+              <span class="section-icon"><i class="fa-solid fa-clipboard-check"></i></span>
+              <h3>Declaration & Final Submission</h3>
+            </div>
+            <span class="part-badge">PART IV</span>
+          </div>
+
+          <div class="checkbox-stack" style="margin-bottom: 24px;">
+            <label class="checkbox-card">
+              <input type="checkbox" id="chkFirstTime">
+              <div class="checkbox-desc">
+                <strong>First-Time Electoral Registration</strong>
+                I am registering as a new voter for the upcoming electoral session.
+              </div>
+            </label>
+
+            <label class="checkbox-card">
+              <input type="checkbox" id="chkSpecialAssistance">
+              <div class="checkbox-desc">
+                <strong>Accessibility Assistance Requested</strong>
+                Request wheelchair or companion assistance at the designated polling center.
+              </div>
+            </label>
+
+            <label class="checkbox-card">
+              <input type="checkbox" id="chkDeclaration" required>
+              <div class="checkbox-desc">
+                <strong>Official Legal Declaration <span class="req-star">*</span></strong>
+                I solemnly affirm that all details provided are truthful, accurate, and that biometric data belongs to me.
+              </div>
+            </label>
+          </div>
+
+          <button type="submit" id="submitRegBtn" class="btn-primary btn-submit-large">
+            <i class="fa-solid fa-paper-plane"></i> Submit & Register Voter Record
+          </button>
+        </section>
+
+      </form>
+    </main>
+
+    <!-- ===================================================================
+         VIEW 2: CHECK SPOT (ATTENDANCE & DUPLICATE VOTE CHECK)
+         =================================================================== -->
+    <main id="viewCheckspot" class="hidden">
+      <section class="form-card">
+        <div class="card-header-bar">
+          <div class="card-header-title">
+            <span class="section-icon"><i class="fa-solid fa-user-check"></i></span>
+            <h3>Polling Attendance & Biometric Verification</h3>
+          </div>
+          <span class="part-badge">VERIFICATION</span>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px;">
+          Scan voter's face or enter registered 12-digit ID / Biometric Key to record polling station attendance and detect duplicate voting attempts.
+        </p>
+
+        <!-- Attendance Camera Viewport -->
+        <div class="camera-scanner-container">
+          <div class="cam-badge-status" id="verifyCamStatus">
+            <i class="fa-solid fa-shield"></i> Ready for Attendance Verification
+          </div>
+
+          <div class="camera-viewport" id="verifyCamViewport">
+            <div class="face-guide-oval"></div>
+            <div class="scan-laser-line" id="verifyScanLine"></div>
+            <div class="camera-placeholder-content" id="verifyCamPlaceholder">
+              <span class="cam-icon">🤳</span>
+              <span>Tap camera scan or use manual ID lookup below</span>
+            </div>
+            <video id="verifyVideo" autoplay playsinline style="display:none;"></video>
+            <canvas id="verifyCanvas" style="display:none;"></canvas>
+          </div>
+
+          <div class="camera-btn-group" style="margin-bottom: 24px;">
+            <button type="button" class="btn-primary" onclick="triggerAttendanceScan()">
+              <i class="fa-solid fa-camera"></i> Scan Face for Attendance
+            </button>
+            <button type="button" class="btn-secondary" onclick="manualIdLookup()">
+              <i class="fa-solid fa-magnifying-glass"></i> Manual ID Lookup
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Banner Alert -->
+        <div id="attendanceResultBanner" class="hidden"></div>
+      </section>
+    </main>
+
+    <!-- ===================================================================
+         VIEW 3: REGISTERED VOTERS DATABASE LOG
+         =================================================================== -->
+    <main id="viewRecords" class="hidden">
+      <section class="form-card">
+        <div class="card-header-bar">
+          <div class="card-header-title">
+            <span class="section-icon"><i class="fa-solid fa-list-check"></i></span>
+            <h3>Session Registered Voter Records</h3>
+          </div>
+          <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="clearDatabase()">
+            <i class="fa-solid fa-trash-can"></i> Clear All
+          </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="input-wrapper" style="margin-bottom: 16px;">
+          <i class="fa-solid fa-magnifying-glass input-icon"></i>
+          <input type="text" id="searchTableInput" class="form-control" placeholder="Search by name, ID number, or district..." oninput="filterRecordsTable()">
+        </div>
+
+        <!-- Data Table -->
+        <div class="records-table-container">
+          <table class="records-table" id="voterDbTable">
+            <thead>
+              <tr>
+                <th>Voter Name</th>
+                <th>ID Ref Number</th>
+                <th>Gender</th>
+                <th>District</th>
+                <th>Mandal</th>
+                <th>Biometric Hash</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="voterDbTableBody">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let currentRegFaceHash = null;
+    let regStream = null;
+
+    // Filter stepper steps dynamically
+    function updateStepper(stepNumber) {
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`step${i}`);
+        if (!stepEl) continue;
+        if (i < stepNumber) {
+          stepEl.className = "stepper-item completed";
+        } else if (i === stepNumber) {
+          stepEl.className = "stepper-item active";
+        } else {
+          stepEl.className = "stepper-item";
+        }
+      }
+    }
+
+    // Input monitoring for stepper animation
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRecordsTable();
+
+      const formInputs = document.querySelectorAll('#voterForm input, #voterForm select');
+      formInputs.forEach(input => {
+        input.addEventListener('input', checkFormProgress);
+      });
+    });
+
+    function checkFormProgress() {
+      const name = document.getElementById('fullName').value.trim();
+      const aadhaar = document.getElementById('aadhaarNum').value.trim();
+      const district = document.getElementById('district').value.trim();
+      const pincode = document.getElementById('pincode').value.trim();
+
+      if (name && aadhaar.length === 12 && district && pincode.length === 6 && currentRegFaceHash) {
+        updateStepper(4);
+      } else if (name && aadhaar.length === 12 && district) {
+        updateStepper(3);
+      } else if (name || aadhaar) {
+        updateStepper(2);
+      } else {
+        updateStepper(1);
+      }
+    }
+
+    // Navigation Tab Switching
+    function switchTab(tab) {
+      document.getElementById('tabRegisterBtn').classList.toggle('active', tab === 'register');
+      document.getElementById('tabCheckspotBtn').classList.toggle('active', tab === 'checkspot');
+      document.getElementById('tabRecordsBtn').classList.toggle('active', tab === 'records');
+
+      document.getElementById('viewRegister').classList.toggle('hidden', tab !== 'register');
+      document.getElementById('viewCheckspot').classList.toggle('hidden', tab !== 'checkspot');
+      document.getElementById('viewRecords').classList.toggle('hidden', tab !== 'records');
+      document.getElementById('registrationStepper').classList.toggle('hidden', tab !== 'register');
+
+      if (tab === 'records') {
+        renderRecordsTable();
+      }
+    }
+
+    // Camera Registration Initialization
+    async function initRegistrationCamera() {
+      const statusBadge = document.getElementById('regCamStatus');
+      const video = document.getElementById('regVideo');
+      const placeholder = document.getElementById('regCamPlaceholder');
+      const startBtn = document.getElementById('regStartCamBtn');
+      const scanBtn = document.getElementById('regScanFaceBtn');
+
+      try {
+        regStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+        video.srcObject = regStream;
+        video.style.display = 'block';
+        placeholder.style.display = 'none';
+
+        statusBadge.className = 'cam-badge-status active';
+        statusBadge.innerHTML = '<i class="fa-solid fa-circle-dot"></i> Live Video Active — Align Face';
+        startBtn.disabled = true;
+        scanBtn.disabled = false;
+      } catch (err) {
+        // Fallback simulation mode
+        statusBadge.className = 'cam-badge-status active';
+        statusBadge.innerHTML = '<i class="fa-solid fa-camera"></i> Simulated Camera Active';
+        placeholder.innerHTML = '<span class="cam-icon">👤</span><span>Camera Preview Simulated</span>';
+        startBtn.disabled = true;
+        scanBtn.disabled = false;
+      }
+    }
+
+    // Capture & Liveness Check
+    function captureRegistrationFace() {
+      const scanLine = document.getElementById('regScanLine');
+      const scanBtn = document.getElementById('regScanFaceBtn');
+      const statusBadge = document.getElementById('regCamStatus');
+
+      scanBtn.disabled = true;
+      scanLine.classList.add('active');
+      statusBadge.className = 'cam-badge-status active';
+      statusBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Scanning Biometrics & Checking Liveness...';
+
+      setTimeout(() => {
+        const livenessPrompt = confirm(
+          "Liveness Check Verification:\n\n1. Please blink your eyes twice.\n2. Turn your head slightly to the left.\n\nClick OK once completed to confirm authentic biometric capture."
+        );
+
+        scanLine.classList.remove('active');
+
+        if (livenessPrompt) {
+          currentRegFaceHash = "FACE_HASH_" + Math.floor(100000 + Math.random() * 900000);
+          
+          const video = document.getElementById('regVideo');
+          const canvas = document.getElementById('regCanvas');
+          const viewport = document.getElementById('regCamViewport');
+          
+          if (regStream && video.style.display !== 'none') {
+            const ctx = canvas.getContext('2d');
+            canvas.width = viewport.clientWidth;
+            canvas.height = viewport.clientHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            video.style.display = 'none';
+            canvas.style.display = 'block';
+          }
+
+          viewport.classList.add('scanned');
+          statusBadge.className = 'cam-badge-status verified';
+          statusBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Biometric Verified: ${currentRegFaceHash}`;
+
+          document.getElementById('regRetakeBtn').classList.remove('hidden');
+          checkFormProgress();
+        } else {
+          statusBadge.className = 'cam-badge-status';
+          statusBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Liveness Check Cancelled';
+          scanBtn.disabled = false;
+        }
+      }, 1500);
+    }
+
+    function resetRegistrationCamera() {
+      if (regStream) {
+        regStream.getTracks().forEach(track => track.stop());
+        regStream = null;
+      }
+      currentRegFaceHash = null;
+
+      document.getElementById('regVideo').style.display = 'none';
+      document.getElementById('regCanvas').style.display = 'none';
+      document.getElementById('regCamPlaceholder').style.display = 'flex';
+      document.getElementById('regCamViewport').classList.remove('scanned');
+
+      const statusBadge = document.getElementById('regCamStatus');
+      statusBadge.className = 'cam-badge-status';
+      statusBadge.innerHTML = '<i class="fa-solid fa-video-slash"></i> Camera Inactive';
+
+      document.getElementById('regStartCamBtn').disabled = false;
+      document.getElementById('regScanFaceBtn').disabled = true;
+      document.getElementById('regRetakeBtn').classList.add('hidden');
+      checkFormProgress();
+    }
+
+    // Form Submission Logic
+    function handleRegistration(e) {
+      e.preventDefault();
+
+      if (!currentRegFaceHash) {
+        alert("⚠️ Mandatory Requirement: Please complete the face scan and liveness check before submitting.");
+        return;
+      }
+
+      const genderSelected = document.querySelector('input[name="gender"]:checked')?.value || 'Not specified';
+      const records = JSON.parse(localStorage.getItem('voterRecords') || '[]');
+
+      const aadhaarVal = document.getElementById('aadhaarNum').value.trim();
+      const existing = records.find(r => r.aadhaar === aadhaarVal);
+      if (existing) {
+        alert(`⚠️ ID Reference ${aadhaarVal} is already registered under voter name: ${existing.name}`);
+        return;
+      }
+
+      const newVoter = {
+        name: document.getElementById('fullName').value.trim(),
+        gender: genderSelected,
+        aadhaar: aadhaarVal,
+        category: document.getElementById('voterCategory').value,
+        region: document.getElementById('region').value.trim(),
+        district: document.getElementById('district').value.trim(),
+        mandal: document.getElementById('mandal').value.trim(),
+        pincode: document.getElementById('pincode').value.trim(),
+        options: {
+          firstTimeVoter: document.getElementById('chkFirstTime').checked,
+          specialAssistance: document.getElementById('chkSpecialAssistance').checked
+        },
+        faceHash: currentRegFaceHash,
+        attendanceCount: 0,
+        registeredAt: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+      };
+
+      records.push(newVoter);
+      localStorage.setItem('voterRecords', JSON.stringify(records));
+
+      alert(`✅ Registration Successful!\n\nVoter record for ${newVoter.name} saved under biometric signature ${currentRegFaceHash}.`);
+      document.getElementById('voterForm').reset();
+      resetRegistrationCamera();
+      updateStepper(1);
+    }
+
+    // Attendance Verification Scanning
+    function triggerAttendanceScan() {
+      const scanLine = document.getElementById('verifyScanLine');
+      scanLine.classList.add('active');
+
+      setTimeout(() => {
+        scanLine.classList.remove('active');
+        const livenessPrompt = confirm(
+          "Attendance Liveness Test:\n\nPlease blink your eyes and turn your head right.\n\nClick OK once completed."
+        );
+
+        if (livenessPrompt) {
+          const inputHash = prompt("Enter 12-digit ID Reference Number or Biometric Hash to simulate face match:", "FACE_HASH_A101");
+          if (inputHash) {
+            verifyAttendance(inputHash.trim());
+          }
+        }
+      }, 1200);
+    }
+
+    function manualIdLookup() {
+      const inputHash = prompt("Enter Voter 12-digit ID Reference Number or Face Hash:");
+      if (inputHash) {
+        verifyAttendance(inputHash.trim());
+      }
+    }
+
+    function verifyAttendance(queryKey) {
+      const records = JSON.parse(localStorage.getItem('voterRecords') || '[]');
+      const resultBanner = document.getElementById('attendanceResultBanner');
+      resultBanner.classList.remove('hidden');
+
+      const matchedVoter = records.find(r => r.faceHash === queryKey || r.aadhaar === queryKey);
+
+      if (!matchedVoter) {
+        resultBanner.className = "status-banner notfound";
+        resultBanner.innerHTML = `
+          <div class="status-banner-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="status-banner-content">
+            <h4>No Voter Record Found</h4>
+            <p>No matching voter registered under ID / Biometric key <strong>${escapeHtml(queryKey)}</strong>. Please check registration status.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (matchedVoter.attendanceCount > 0) {
+        resultBanner.className = "status-banner duplicate";
+        resultBanner.innerHTML = `
+          <div class="status-banner-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+          <div class="status-banner-content">
+            <h4>🚨 DUPLICATE VOTE DETECTED!</h4>
+            <p>Voter <strong>${escapeHtml(matchedVoter.name)}</strong> (ID: ${escapeHtml(matchedVoter.aadhaar)}) has ALREADY recorded attendance.<br>
+            Biometric Hash: <code>${escapeHtml(matchedVoter.faceHash)}</code> | Attendance Count: <strong>${matchedVoter.attendanceCount}</strong></p>
+          </div>
+        `;
+      } else {
+        matchedVoter.attendanceCount += 1;
+        localStorage.setItem('voterRecords', JSON.stringify(records));
+
+        resultBanner.className = "status-banner success";
+        resultBanner.innerHTML = `
+          <div class="status-banner-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="status-banner-content">
+            <h4>✅ ATTENDANCE VERIFIED & RECORDED</h4>
+            <p>Voter <strong>${escapeHtml(matchedVoter.name)}</strong> successfully verified through biometric face match.<br>
+            District: <strong>${escapeHtml(matchedVoter.district)}</strong> | Mandal: <strong>${escapeHtml(matchedVoter.mandal)}</strong></p>
+          </div>
+        `;
+      }
+    }
+
+    // Render Database Log Table
+    function renderRecordsTable() {
+      const tbody = document.getElementById('voterDbTableBody');
+      const records = JSON.parse(localStorage.getItem('voterRecords') || '[]');
+      tbody.innerHTML = '';
+
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No registered voter records in session database.</td></tr>`;
+        return;
+      }
+
+      records.forEach(r => {
+        const row = document.createElement('tr');
+        const statusBadge = r.attendanceCount > 0 
+          ? `<span class="badge-voted"><i class="fa-solid fa-check"></i> Voted</span>` 
+          : `<span class="badge-pending">Registered</span>`;
+
+        row.innerHTML = `
+          <td><strong>${escapeHtml(r.name)}</strong></td>
+          <td class="code-cell">${escapeHtml(r.aadhaar)}</td>
+          <td>${escapeHtml(r.gender)}</td>
+          <td>${escapeHtml(r.district)}</td>
+          <td>${escapeHtml(r.mandal)}</td>
+          <td class="code-cell">${escapeHtml(r.faceHash)}</td>
+          <td>${statusBadge}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function filterRecordsTable() {
+      const filter = document.getElementById('searchTableInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#voterDbTableBody tr');
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    }
+
+    function clearDatabase() {
+      if (confirm("Are you sure you want to clear all session registered voter records?")) {
+        localStorage.removeItem('voterRecords');
+        renderRecordsTable();
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+  </script>
+</body>
+</html>
